@@ -12,9 +12,6 @@ class GameController {
     this.requestAnimFrame = requestAnimFrame;
 
     this.fps = 0;
-    this.hooks = [];
-    this.lastTriggerTime = new Date().getTime();
-    this.sampleSpeed = 500; // mili
     this.lastRun = null;
   }
 
@@ -26,20 +23,6 @@ class GameController {
     var delta = (new Date().getTime() - this.lastRun) / 1000;
     this.lastRun = new Date().getTime();
     this.fps = 1 / delta;
-  }
-
-  addHook(func) {
-    if (func && typeof func === 'function') {
-      this.hooks.push(func);
-    }
-  }
-
-  triggerHooks() {
-    const timeSinceLastPrint = (new Date().getTime() - this.lastTriggerTime);
-    if (timeSinceLastPrint > this.sampleSpeed) {
-      this.hooks.map((func) => func());
-      this.lastTriggerTime = new Date().getTime();
-    }
   }
 
   gameLoop() {
@@ -54,7 +37,6 @@ class GameController {
 
     this.clearScreen();
     this.updateFPS();
-    this.triggerHooks();
 
     if (this.isGameRunning) {
       requestAnimFrame(gameLoop);

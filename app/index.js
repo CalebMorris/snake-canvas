@@ -8,9 +8,9 @@ import GameController from './game-controller';
 
   const gameController = new GameController(canvas.width, canvas.height, context, window.requestAnimationFrame);
 
-  gameController.addHook(() => {
+  setInterval(() => {
     extra.textContent = gameController.fps.toFixed(2);
-  });
+  }, 500);
 
   gameController.start();
 
