@@ -4,6 +4,11 @@ var webpack = require('webpack');
 module.exports = {
   entryFile : './app/index.js',
   loaders : [
+    {
+      test: /\.jsx?$/,
+      exclude: /(node_modules|bower_components)/,
+      loader: 'babel?presets[]=es2015',
+    },
   // image loader - https://www.npmjs.com/package/image-webpack-loader
     {
       test : /\.(jpe?g|png|gif|svg|ico)$/i,
