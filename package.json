@@ -4,7 +4,7 @@
   "description": "Class video game",
   "main": "index.js",
   "scripts": {
-    "dev-web": "webpack-dev-server --config ./webpack-dev.config.js --hot --progress --colors --content-base build",
+    "dev": "webpack-dev-server --config ./webpack-dev.config.js --hot --progress --colors --content-base build",
     "build": "rm build/*; webpack --config ./webpack-prod.config.js --progress --colors",
     "test": "./node_modules/.bin/mocha --recursive --compilers js:babel-register --require test/setup.js",
     "lint": "./node_modules/.bin/eslint --ext .js .",
