@@ -1,3 +1,5 @@
+import SnakeController from './snake-controller';
+
 class GameController {
   constructor(width, height, context, requestAnimFrame) {
     if (width <= 0) throw new Error('width must be greater than 0');
@@ -10,6 +12,11 @@ class GameController {
     this.height = height;
     this.isGameRunning = false;
     this.requestAnimFrame = requestAnimFrame;
+
+    const segmentSize = 16;
+    this.snakeController = new SnakeController(this.ctx, 16, (this.width - segmentSize) / 2, (this.height - segmentSize) / 2);
+
+    this.updateSpeed = 1000; // mili
 
     this.fps = 0;
     this.lastRun = null;
@@ -35,7 +42,8 @@ class GameController {
       return;
     }
 
-    this.clearScreen();
+    this.snakeController.render();
+
     this.updateFPS();
 
     if (this.isGameRunning) {
@@ -43,9 +51,18 @@ class GameController {
     }
   }
 
+  controllerLoop() {
+    if (this.isGameRunning) {
+      this.snakeController.move();
+      setTimeout(this.controllerLoop.bind(this), this.updateSpeed);
+    }
+  }
+
   start() {
+    this.clearScreen();
     this.isGameRunning = true;
     this.gameLoop();
+    this.controllerLoop();
   }
 }
 
