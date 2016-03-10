@@ -6,6 +6,15 @@
   		<title>{%=o.htmlWebpackPlugin.options.title%}</title>
 	</head>
 	<body id='body'>
+		<noscript>
+			<style type="text/css">
+				.pagecontainer {display:none;}
+			</style>
+			<div class="noscriptmsg">
+					You don't have javascript enabled.
+					Please enable to view content.
+			</div>
+	</noscript>
 		<canvas id="game-canvas" width="600" height="400" style="border:1px solid #000000;"></canvas>
 		<div id="extra-content"></div>
 	</body>
