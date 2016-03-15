@@ -1,16 +1,11 @@
+import Position from './position';
+
 const Direction = Object.freeze({
   up : 0,
   right : 1,
   down : 2,
   left : 3,
 });
-
-class Position {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-  }
-}
 
 class SnakeController {
   constructor(context, segmentSize, offsetX, offsetY) {
@@ -52,18 +47,28 @@ class SnakeController {
     this.shouldRedraw = true;
   }
 
+  /**
+   * @param  {Position} gameObject Position of object to determine collisions
+   * @return {bool}                Does it ~~blend~~ collide
+   */
+  doesCollideWith(gameObject) {
+    for (var i = 0; i < this.pieceStack.length; i++) {
+      if (this.pieceStack[i].equals(gameObject)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   render() {
     if (this.shouldRedraw) {
       this.ctx.fillStyle = '#FF0000';
-      this.ctx.fillRect(
-        this.size * this.head.x + this.offsetX, this.size * this.head.y + this.offsetY,
-        this.size, this.size
-      );
+      const renderPosition = this.head.toRenderDomain(this.size, this.offsetX, this.offsetY);
+      this.ctx.fillRect(renderPosition.x, renderPosition.y, this.size, this.size);
+
       if (this.removedPiece) {
-        this.ctx.clearRect(
-          this.size * this.removedPiece.x + this.offsetX, this.size * this.removedPiece.y + this.offsetY,
-          this.size, this.size
-        );
+        const removedRenderPostion = this.removedPiece.toRenderDomain(this.size, this.offsetX, this.offsetY);
+        this.ctx.clearRect(removedRenderPostion.x, removedRenderPostion.y, this.size, this.size);
       }
       this.shouldRedraw = false;
     }

@@ -6,4 +6,7 @@
   "ecmaFeatures": {
       "module": true
   },
+  "rules": {
+    "max-statements": [2, 24]
+  }
 }

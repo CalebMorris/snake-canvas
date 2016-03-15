@@ -1,4 +1,5 @@
 import SnakeController from './snake-controller';
+import { FoodFactory } from './food-controller';
 
 class GameController {
   constructor(width, height, context, requestAnimFrame) {
@@ -14,7 +15,15 @@ class GameController {
     this.requestAnimFrame = requestAnimFrame;
 
     const segmentSize = 16;
-    this.snakeController = new SnakeController(this.ctx, 16, (this.width - segmentSize) / 2, (this.height - segmentSize) / 2);
+    const gameWidth = width / segmentSize;
+    const gameHeight = height / segmentSize;
+    const offsetX = (this.width - segmentSize) / 2;
+    const offsetY = (this.height - segmentSize) / 2;
+
+    this.snakeController = new SnakeController(this.ctx, 16, offsetX, offsetY);
+    this.foodController = new FoodFactory(context, segmentSize, offsetX, offsetY, gameWidth, gameHeight);
+
+    this.currentFood = null;
 
     this.updateSpeed = 1000; // mili
 
@@ -32,36 +41,52 @@ class GameController {
     this.fps = 1 / delta;
   }
 
-  gameLoop() {
+  renderLoop() {
     var requestAnimFrame = this.requestAnimFrame;
-    var gameLoop = this.gameLoop.bind(this);
+    var renderLoop = this.renderLoop.bind(this);
 
     if (! this.lastRun) {
       this.lastRun = new Date().getTime();
-      requestAnimFrame(gameLoop);
+      requestAnimFrame(renderLoop);
       return;
     }
 
     this.snakeController.render();
+    this.currentFood.render();
 
     this.updateFPS();
 
     if (this.isGameRunning) {
-      requestAnimFrame(gameLoop);
+      requestAnimFrame(renderLoop);
     }
   }
 
   controllerLoop() {
     if (this.isGameRunning) {
       this.snakeController.move();
+
+      if (! this.currentFood) {
+        this.updateFood();
+      }
+
       setTimeout(this.controllerLoop.bind(this), this.updateSpeed);
     }
+  }
+
+  updateFood() {
+    let food = this.foodController.randomFood();
+
+    while (this.snakeController.doesCollideWith(food)) {
+      food = this.foodController.randomFood();
+    }
+
+    this.currentFood = food;
   }
 
   start() {
     this.clearScreen();
     this.isGameRunning = true;
-    this.gameLoop();
+    this.renderLoop();
     this.controllerLoop();
   }
 }
