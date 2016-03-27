@@ -1,3 +1,4 @@
+import MenuController from './menu-controller';
 import SnakeController from './snake-controller';
 import { FoodFactory } from './food-controller';
 
@@ -20,8 +21,9 @@ class GameController {
     const offsetX = (this.width - segmentSize) / 2;
     const offsetY = (this.height - segmentSize) / 2;
 
-    this.snakeController = new SnakeController(this.ctx, 16, offsetX, offsetY);
+    this.snakeController = new SnakeController(context, 16, offsetX, offsetY);
     this.foodController = new FoodFactory(context, segmentSize, offsetX, offsetY, gameWidth, gameHeight);
+    this.menuController = new MenuController(context, width, height);
 
     this.currentFood = null;
 
@@ -29,6 +31,8 @@ class GameController {
 
     this.fps = 0;
     this.lastRun = null;
+
+    this.showMenu();
   }
 
   clearScreen() {
@@ -62,15 +66,36 @@ class GameController {
   }
 
   controllerLoop() {
+    this.snakeController.move();
+
+    if (this.snakeController.hasCollided()) {
+      this.gameOver();
+      return;
+    }
+
+    if (! this.currentFood) {
+      this.updateFood();
+    }
+
     if (this.isGameRunning) {
-      this.snakeController.move();
-
-      if (! this.currentFood) {
-        this.updateFood();
-      }
-
       setTimeout(this.controllerLoop.bind(this), this.updateSpeed);
     }
+  }
+
+  showMenu() {
+    this.menuController.render();
+  }
+
+  // TODO: Menu hook to start
+  onGameStart() {
+    this.isGameRunning = true;
+    this.renderLoop();
+    this.controllerLoop();
+  }
+
+  gameOver() {
+    this.isGameRunning = false;
+    this.showMenu();
   }
 
   updateFood() {
@@ -85,9 +110,7 @@ class GameController {
 
   start() {
     this.clearScreen();
-    this.isGameRunning = true;
-    this.renderLoop();
-    this.controllerLoop();
+    this.showMenu();
   }
 }
 

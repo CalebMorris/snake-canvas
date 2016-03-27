@@ -60,6 +60,11 @@ class SnakeController {
     return false;
   }
 
+  hasCollided() {
+    // Edge
+    // Itself
+  }
+
   render() {
     if (this.shouldRedraw) {
       this.ctx.fillStyle = '#FF0000';
