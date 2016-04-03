@@ -25,16 +25,36 @@ class SnakeController {
     this.removedPiece = null;
   }
 
+  onKeyInput(event) {
+    if (!event) return;
+    console.log('event', event)
+    switch (event.keyCode) {
+      case 37:
+        this.direction = Direction.left;
+        break;
+      case 38:
+        this.direction = Direction.up;
+        break;
+      case 39:
+        this.direction = Direction.right;
+        break;
+      case 40:
+        this.direction = Direction.down;
+        break;
+      default: break;
+    }
+  }
+
   move() {
     switch (this.direction) {
       case Direction.up:
-        this.head = new Position(this.head.x, this.head.y + 1);
+        this.head = new Position(this.head.x, this.head.y - 1);
         break;
       case Direction.right:
         this.head = new Position(this.head.x + 1, this.head.y);
         break;
       case Direction.down:
-        this.head = new Position(this.head.x, this.head.y - 1);
+        this.head = new Position(this.head.x, this.head.y + 1);
         break;
       case Direction.left:
         this.head = new Position(this.head.x - 1, this.head.y);

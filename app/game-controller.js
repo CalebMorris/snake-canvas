@@ -1,3 +1,4 @@
+import InputController from './input-controller';
 import MenuController from './menu-controller';
 import SnakeController from './snake-controller';
 import { FoodFactory } from './food-controller';
@@ -25,6 +26,9 @@ class GameController {
     this.snakeController = new SnakeController(context, 16, offsetX, offsetY);
     this.foodController = new FoodFactory(context, segmentSize, offsetX, offsetY, gameWidth, gameHeight);
     this.menuController = new MenuController(element, context, width, height, this.onGameStart.bind(this));
+    this.inputController = new InputController(element, {
+      keyup : this.snakeController.onKeyInput.bind(this.snakeController),
+    });
 
     this.currentFood = null;
 
