@@ -3,13 +3,14 @@ import SnakeController from './snake-controller';
 import { FoodFactory } from './food-controller';
 
 class GameController {
-  constructor(width, height, context, requestAnimFrame) {
+  constructor(element, context, width, height, requestAnimFrame) {
     if (width <= 0) throw new Error('width must be greater than 0');
     if (height <= 0) throw new Error('height must be greater than 0');
     if (! context) throw new Error('Missing context');
     if (! requestAnimFrame) throw new Error('Missing requestAnimFrame');
 
     this.ctx = context;
+    this.element = element;
     this.width = width;
     this.height = height;
     this.isGameRunning = false;
@@ -23,7 +24,7 @@ class GameController {
 
     this.snakeController = new SnakeController(context, 16, offsetX, offsetY);
     this.foodController = new FoodFactory(context, segmentSize, offsetX, offsetY, gameWidth, gameHeight);
-    this.menuController = new MenuController(context, width, height);
+    this.menuController = new MenuController(element, context, width, height, this.onGameStart.bind(this));
 
     this.currentFood = null;
 
@@ -86,8 +87,8 @@ class GameController {
     this.menuController.render();
   }
 
-  // TODO: Menu hook to start
   onGameStart() {
+    this.clearScreen();
     this.isGameRunning = true;
     this.renderLoop();
     this.controllerLoop();

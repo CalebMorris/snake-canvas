@@ -6,7 +6,7 @@ import GameController from './game-controller';
   const extra = document.getElementById('extra-content');
   const context = canvas.getContext('2d');
 
-  const gameController = new GameController(canvas.width, canvas.height, context, window.requestAnimationFrame);
+  const gameController = new GameController(canvas, context, canvas.width, canvas.height, window.requestAnimationFrame);
 
   setInterval(() => {
     extra.textContent = gameController.fps.toFixed(2);
