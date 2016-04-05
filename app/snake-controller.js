@@ -20,7 +20,7 @@ class SnakeController {
       Math.floor(this.gameWidth / 2),
       Math.floor(this.gameHeight / 2)
     );
-    this.pieceStack = [];
+    this.tailStack = [];
     this.direction = Direction.up;
     this.shouldRedraw = true;
     this.size = segmentSize;
@@ -48,7 +48,13 @@ class SnakeController {
   }
 
   move() {
-    this.removedPiece = this.pieceStack.length > 0 ? this.pieceStack.pop() : this.head;
+    // Case 0: Head and no tail
+    // Case 1: Head and tail
+    this.removedPiece = this.head;
+    if (this.tailStack.length > 0) {
+      this.tailStack.unshift(this.head);
+      this.removedPiece = this.tailStack.pop();
+    }
     switch (this.direction) {
       case Direction.up:
         this.head = new Position(this.head.x, this.head.y - 1);
@@ -65,8 +71,8 @@ class SnakeController {
       default:
         break;
     }
-    // this.pieceStack.push(this.head);
     this.shouldRedraw = true;
+    console.log(this.tailStack.map(v => `(${v.x},${v.y})`))
   }
 
   /**
@@ -74,12 +80,16 @@ class SnakeController {
    * @return {bool}                Does it ~~blend~~ collide
    */
   doesCollideWith(gameObject) {
-    for (var i = 0; i < this.pieceStack.length; i++) {
-      if (this.pieceStack[i].equals(gameObject)) {
-        debugger
+    return this.collidesWithTail(gameObject) || this.head.equals(gameObject);
+  }
+
+  collidesWithTail(gameObject) {
+    for (var i = 0; i < this.tailStack.length; i++) {
+      if (this.tailStack[i].equals(gameObject)) {
         return true;
       }
     }
+
     return false;
   }
 
@@ -89,7 +99,7 @@ class SnakeController {
       return true;
     }
     // TODO: Itself
-    this.doesCollideWith(this.head);
+    this.collidesWithTail(this.head);
 
     return false;
   }

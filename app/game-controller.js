@@ -61,7 +61,9 @@ class GameController {
     }
 
     this.snakeController.render();
-    this.currentFood.render();
+    if (this.currentFood) {
+      this.currentFood.render();
+    }
 
     this.updateFPS();
 
@@ -74,12 +76,18 @@ class GameController {
     this.snakeController.move();
 
     if (this.snakeController.hasCollided()) {
-      debugger;
       this.gameOver();
       return;
     }
 
-    if (! this.currentFood) {
+    if (this.currentFood) {
+      if (this.snakeController.doesCollideWith(this.currentFood.position)) {
+        // Nom-Nom
+        debugger
+        this.snakeController.tailStack.push(this.currentFood.position);
+        this.currentFood = null;
+      }
+    } else {
       this.updateFood();
     }
 
