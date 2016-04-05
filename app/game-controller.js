@@ -60,10 +60,10 @@ class GameController {
       return;
     }
 
-    this.snakeController.render();
     if (this.currentFood) {
       this.currentFood.render();
     }
+    this.snakeController.render();
 
     this.updateFPS();
 
@@ -75,20 +75,19 @@ class GameController {
   controllerLoop() {
     this.snakeController.move();
 
-    if (this.snakeController.hasCollided()) {
-      this.gameOver();
-      return;
-    }
-
     if (this.currentFood) {
       if (this.snakeController.doesCollideWith(this.currentFood.position)) {
         // Nom-Nom
-        debugger
-        this.snakeController.tailStack.push(this.currentFood.position);
         this.currentFood = null;
+        this.snakeController.increaseTail();
       }
     } else {
       this.updateFood();
+    }
+
+    if (this.snakeController.hasCollided()) {
+      this.gameOver();
+      return;
     }
 
     if (this.isGameRunning) {
