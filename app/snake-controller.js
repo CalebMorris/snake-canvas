@@ -26,24 +26,47 @@ class SnakeController {
     this.size = segmentSize;
 
     this.removedPiece = null;
+    this.canChangeDirection = true;
   }
 
   onKeyInput(event) {
     if (!event) return;
-    switch (event.keyCode) {
-      case 37:
-        if (this.direction !== Direction.right) this.direction = Direction.left;
-        break;
-      case 38:
-        if (this.direction !== Direction.down) this.direction = Direction.up;
-        break;
-      case 39:
-        if (this.direction !== Direction.left) this.direction = Direction.right;
-        break;
-      case 40:
-        if (this.direction !== Direction.up) this.direction = Direction.down;
-        break;
-      default: break;
+    if (this.canChangeDirection) {
+      switch (event.keyCode) {
+        case 37:
+          if (this.direction !== Direction.right) {
+            this.direction = Direction.left;
+            this.canChangeDirection = false;
+          }
+          break;
+        case 38:
+          if (this.direction !== Direction.down) {
+            this.direction = Direction.up;
+            this.canChangeDirection = false;
+          }
+          break;
+        case 39:
+          if (this.direction !== Direction.left) {
+            this.direction = Direction.right;
+            this.canChangeDirection = false;
+          }
+          break;
+        case 40:
+          if (this.direction !== Direction.up) {
+            this.direction = Direction.down;
+            this.canChangeDirection = false;
+          }
+          break;
+        default: break;
+      }
+    }
+  }
+
+  increaseTail() {
+    if (this.tailStack.length > 0) {
+      this.tailStack.push(this.tailStack[this.tailStack.length - 1]);
+    } else {
+      this.tailStack.push(this.head);
     }
   }
 
@@ -72,6 +95,7 @@ class SnakeController {
         break;
     }
     this.shouldRedraw = true;
+    this.canChangeDirection = true;
     console.log(this.tailStack.map(v => `(${v.x},${v.y})`))
   }
 

@@ -179,7 +179,7 @@
     "wrap-regex": [ 2 ],
 
     // legacy
-    "max-depth": [ 2, 2 ],
+    "max-depth": [ 2, 5 ],
     "max-len": [ 0, 100 ],
     "max-params": [ 0, 4 ],
     "max-statements": [ 2, 15 ],
