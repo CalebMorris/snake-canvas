@@ -8,16 +8,19 @@ const Direction = Object.freeze({
 });
 
 class SnakeController {
-  constructor(context, segmentSize, offsetX, offsetY) {
+  constructor(context, segmentSize, gameWidth, gameHeight) {
     // Offset is in pixels
     if (! context) throw new Error('Missing context');
 
     this.ctx = context;
-    this.offsetX = offsetX;
-    this.offsetY = offsetY;
+    this.gameWidth = gameWidth;
+    this.gameHeight = gameHeight;
 
-    this.head = new Position(0, 0);
-    this.pieceStack = [this.head];
+    this.head = new Position(
+      Math.floor(this.gameWidth / 2),
+      Math.floor(this.gameHeight / 2)
+    );
+    this.pieceStack = [];
     this.direction = Direction.up;
     this.shouldRedraw = true;
     this.size = segmentSize;
@@ -45,6 +48,7 @@ class SnakeController {
   }
 
   move() {
+    this.removedPiece = this.pieceStack.length > 0 ? this.pieceStack.pop() : this.head;
     switch (this.direction) {
       case Direction.up:
         this.head = new Position(this.head.x, this.head.y - 1);
@@ -61,8 +65,7 @@ class SnakeController {
       default:
         break;
     }
-    this.removedPiece = this.pieceStack.pop();
-    this.pieceStack.push(this.head);
+    // this.pieceStack.push(this.head);
     this.shouldRedraw = true;
   }
 
@@ -73,6 +76,7 @@ class SnakeController {
   doesCollideWith(gameObject) {
     for (var i = 0; i < this.pieceStack.length; i++) {
       if (this.pieceStack[i].equals(gameObject)) {
+        debugger
         return true;
       }
     }
@@ -81,17 +85,23 @@ class SnakeController {
 
   hasCollided() {
     // Edge
-    // Itself
+    if (this.head.x < 0 || this.head.x >= this.gameWidth || this.head.y < 0 || this.head.y >= this.gameHeight) {
+      return true;
+    }
+    // TODO: Itself
+    this.doesCollideWith(this.head);
+
+    return false;
   }
 
   render() {
     if (this.shouldRedraw) {
       this.ctx.fillStyle = '#FF0000';
-      const renderPosition = this.head.toRenderDomain(this.size, this.offsetX, this.offsetY);
+      const renderPosition = this.head.toRenderDomain(this.size);
       this.ctx.fillRect(renderPosition.x, renderPosition.y, this.size, this.size);
 
       if (this.removedPiece) {
-        const removedRenderPostion = this.removedPiece.toRenderDomain(this.size, this.offsetX, this.offsetY);
+        const removedRenderPostion = this.removedPiece.toRenderDomain(this.size);
         this.ctx.clearRect(removedRenderPostion.x, removedRenderPostion.y, this.size, this.size);
       }
       this.shouldRedraw = false;

@@ -8,12 +8,13 @@ class Food {
     this.offsetX = offsetX;
     this.offsetY = offsetY;
     this.hasDrawn = false;
+    console.log('Food @', position);
   }
 
   render() {
     if (this.hasDrawn) return;
     this.ctx.fillStyle = '#0000FF';
-    const renderPosition = this.position.toRenderDomain(this.size, this.offsetX, this.offsetY);
+    const renderPosition = this.position.toRenderDomain(this.size);
     this.ctx.fillRect(renderPosition.x, renderPosition.y, this.size, this.size);
   }
 }

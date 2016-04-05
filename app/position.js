@@ -22,7 +22,7 @@ class Position {
    * @return {Position} Generated random position
    */
   static random(minX, minY, maxX, maxY) {
-    return new Position(randomRange(minX, maxX), randomRange(minY, maxY));
+    return new Position(randomRange(minX, maxX - 1), randomRange(minY, maxY - 1));
   }
 
   equals(otherPosition) {
@@ -37,6 +37,8 @@ class Position {
    * @return {Position}        render-domain position
    */
   toRenderDomain(segmentSize, offsetX, offsetY) {
+    offsetX = offsetX || 0;
+    offsetY = offsetY || 0;
     return new Position(segmentSize * this.x + offsetX, segmentSize * this.y + offsetY);
   }
 }

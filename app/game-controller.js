@@ -18,12 +18,12 @@ class GameController {
     this.requestAnimFrame = requestAnimFrame;
 
     const segmentSize = 16;
-    const gameWidth = width / segmentSize;
-    const gameHeight = height / segmentSize;
+    const gameWidth = Math.floor(width / segmentSize);
+    const gameHeight = Math.floor(height / segmentSize);
     const offsetX = (this.width - segmentSize) / 2;
     const offsetY = (this.height - segmentSize) / 2;
 
-    this.snakeController = new SnakeController(context, 16, offsetX, offsetY);
+    this.snakeController = new SnakeController(context, 16, gameWidth, gameHeight);
     this.foodController = new FoodFactory(context, segmentSize, offsetX, offsetY, gameWidth, gameHeight);
     this.menuController = new MenuController(element, context, width, height, this.onGameStart.bind(this));
     this.inputController = new InputController(element, {
@@ -74,6 +74,7 @@ class GameController {
     this.snakeController.move();
 
     if (this.snakeController.hasCollided()) {
+      debugger;
       this.gameOver();
       return;
     }
