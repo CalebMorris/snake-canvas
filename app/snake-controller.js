@@ -29,16 +29,16 @@ class SnakeController {
     if (!event) return;
     switch (event.keyCode) {
       case 37:
-        this.direction = Direction.left;
+        if (this.direction !== Direction.right) this.direction = Direction.left;
         break;
       case 38:
-        this.direction = Direction.up;
+        if (this.direction !== Direction.down) this.direction = Direction.up;
         break;
       case 39:
-        this.direction = Direction.right;
+        if (this.direction !== Direction.left) this.direction = Direction.right;
         break;
       case 40:
-        this.direction = Direction.down;
+        if (this.direction !== Direction.up) this.direction = Direction.down;
         break;
       default: break;
     }
