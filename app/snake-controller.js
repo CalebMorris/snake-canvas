@@ -27,7 +27,6 @@ class SnakeController {
 
   onKeyInput(event) {
     if (!event) return;
-    console.log('event', event)
     switch (event.keyCode) {
       case 37:
         this.direction = Direction.left;
