@@ -1,8 +1,8 @@
 
 const defaultButtonColors = Object.freeze({
   base: '#F44336',
-  pressed: '#E53935',
-  hover: '#D32F2F',
+  pressed: '#D32F2F',
+  hover: '#E53935',
 });
 
 class ButtonController {
@@ -29,7 +29,7 @@ class ButtonController {
     this.eventRefs = {
       mousedown : this.handleClick.bind(this),
       mouseup : this.handleRelease.bind(this),
-      mousemove : this.handleRelease.bind(this),
+      mousemove : this.handleMove.bind(this),
     };
     this.attachListeners();
   }
@@ -63,6 +63,7 @@ class ButtonController {
       if (this.isButtonClicked) {
         this.detachListeners();
         this.onStartCallback();
+        this.element.style.cursor = 'auto';
         return;
       }
 
@@ -81,10 +82,12 @@ class ButtonController {
     if (x >= this.buttonLeft && x <= this.buttonLeft + this.buttonWidth &&
         y >= this.buttonTop && y <= this.buttonTop + this.buttonHeight) {
       this.isButtonHovered = true;
+      this.element.style.cursor = 'pointer';
       this.render();
     } else if (this.isButtonHovered) {
       this.isButtonHovered = false;
       this.isButtonClicked = false;
+      this.element.style.cursor = 'auto';
       this.render();
     }
   }
