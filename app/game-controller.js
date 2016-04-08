@@ -53,6 +53,7 @@ class GameController {
   }
 
   renderLoop() {
+    if (!this.isGameRunning) return;
     var requestAnimFrame = this.requestAnimFrame;
     var renderLoop = this.renderLoop.bind(this);
 
@@ -69,12 +70,11 @@ class GameController {
 
     this.updateFPS();
 
-    if (this.isGameRunning) {
-      requestAnimFrame(renderLoop);
-    }
+    requestAnimFrame(renderLoop);
   }
 
   controllerLoop() {
+    if (!this.isGameRunning) return;
     this.snakeController.move();
 
     if (this.currentFood) {
@@ -94,13 +94,11 @@ class GameController {
       return;
     }
 
-    if (this.isGameRunning) {
-      setTimeout(this.controllerLoop.bind(this), this.updateSpeed);
-    }
+    setTimeout(this.controllerLoop.bind(this), this.updateSpeed);
   }
 
   showMenu() {
-    this.menuController.render();
+    this.menuController.render(this.isGameOver);
   }
 
   onGameStart() {
@@ -112,6 +110,8 @@ class GameController {
 
   gameOver() {
     this.isGameRunning = false;
+    this.isGameOver = true;
+    this.clearScreen();
     this.showMenu();
   }
 

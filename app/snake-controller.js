@@ -96,7 +96,7 @@ class SnakeController {
     }
     this.shouldRedraw = true;
     this.canChangeDirection = true;
-    console.log(`Head: ${this.head.toString()}, Tail: ${this.tailStack.map(v => v.toString())}`)
+    console.log(`Head: ${this.head.toString()}, Tail: [${this.tailStack.map(v => v.toString())}]`);
   }
 
   /**
