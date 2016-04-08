@@ -13,6 +13,10 @@ class Position {
     this.y = y;
   }
 
+  toString() {
+    return `(${this.x},${this.y})`;
+  }
+
   /**
    * Generate random position in x,y range
    * @param  {int} minX Minimum x position (inclusive)

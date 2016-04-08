@@ -66,7 +66,7 @@ class SnakeController {
     if (this.tailStack.length > 0) {
       this.tailStack.push(this.tailStack[this.tailStack.length - 1]);
     } else {
-      this.tailStack.push(this.head);
+      this.tailStack.push(this.removedPiece);
     }
   }
 
@@ -96,7 +96,7 @@ class SnakeController {
     }
     this.shouldRedraw = true;
     this.canChangeDirection = true;
-    console.log(this.tailStack.map(v => `(${v.x},${v.y})`))
+    console.log(`Head: ${this.head.toString()}, Tail: ${this.tailStack.map(v => v.toString())}`)
   }
 
   /**

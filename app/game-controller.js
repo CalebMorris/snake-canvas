@@ -79,6 +79,7 @@ class GameController {
 
     if (this.currentFood) {
       if (this.snakeController.doesCollideWith(this.currentFood.position)) {
+        console.log(`NomNom: ${[this.currentFood.position].map(v => `(${v.x},${v.y})`)}`);
         // Nom-Nom
         this.currentFood = null;
         this.snakeController.increaseTail();
