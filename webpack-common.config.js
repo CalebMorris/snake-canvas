@@ -32,6 +32,7 @@ module.exports = {
   indexPagePlugin : new HtmlWebpackPlugin({
     inject : true,
     title : 'Snake',
+    favicon : './app/Assets/turtle_icon.png',
     filename : 'index.html',
     template : './app/index_template.html',
   }),
