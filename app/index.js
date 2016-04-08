@@ -1,5 +1,7 @@
 import GameController from './game-controller';
 
+require('./Assets/style.scss');
+
 (function(window, document) {
 
   const canvas = document.getElementById('game-canvas');

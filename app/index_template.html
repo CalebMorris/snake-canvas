@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-  		<meta charset="UTF-8">
-  		<meta name="viewport" content="width=device-width, initial-scale=1">
-  		<title>{%=o.htmlWebpackPlugin.options.title%}</title>
+			<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+			<link rel="{%=o.htmlWebpackPlugin.options.styles%}">
+			<title>{%=o.htmlWebpackPlugin.options.title%}</title>
 	</head>
 	<body id='body'>
 		<noscript>
@@ -14,8 +15,10 @@
 					You don't have javascript enabled.
 					Please enable to view content.
 			</div>
-	</noscript>
-		<canvas id="game-canvas" width="600" height="400" style="border:1px solid #000000;"></canvas>
-		<div id="extra-content"></div>
+		</noscript>
+		<div class="game-container">
+			<canvas id="game-canvas" width="600" height="400" style="border:1px solid #000000;"></canvas>
+			<div id="extra-content"></div>
+		</div>
 	</body>
 </html>

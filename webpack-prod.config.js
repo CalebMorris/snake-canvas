@@ -1,5 +1,6 @@
-var commonConfig = require('./webpack-common.config.js');
 var webpack = require('webpack');
+
+var commonConfig = require('./webpack-common.config.js');
 
 var prodLoaders = [];
 
@@ -21,7 +22,11 @@ module.exports = {
   },
   plugins : [
     new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin({ minimize : true }),
+    new webpack.optimize.UglifyJsPlugin({
+      minimize : true,
+      exclude : /\.s?css$/,
+    }),
+    commonConfig.cssPlugin,
     commonConfig.indexPagePlugin,
   ],
 };
