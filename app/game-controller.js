@@ -30,6 +30,8 @@ class GameController {
       keyup : this.snakeController.onKeyInput.bind(this.snakeController),
     });
 
+    this.scoreUpdateHook = () => {};
+
     this.currentFood = null;
 
     this.updateSpeed = 1000; // mili
@@ -80,6 +82,7 @@ class GameController {
         // Nom-Nom
         this.currentFood = null;
         this.snakeController.increaseTail();
+        this.scoreUpdateHook(this.snakeController.tailStack.length);
       }
     } else {
       this.updateFood();
