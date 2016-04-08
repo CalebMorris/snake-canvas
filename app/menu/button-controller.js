@@ -1,5 +1,11 @@
 
-class MenuController {
+const defaultButtonColors = Object.freeze({
+  base: '#F44336',
+  pressed: '#E53935',
+  hover: '#D32F2F',
+});
+
+class ButtonController {
   constructor(element, context, maxWidth, maxHeight, onStartCallback) {
     this.ctx = context;
     this.element = element;
@@ -7,17 +13,17 @@ class MenuController {
     this.maxHeight = maxHeight;
     this.onStartCallback = onStartCallback;
 
-    // Button Init
     this.buttonLeft = this.maxWidth * 0.2 + 20;
     this.buttonTop = this.maxHeight * 0.6 - 20;
     this.buttonWidth = this.maxWidth * 0.6 - 40;
+
     this.buttonHeight = 80;
     this.isButtonClicked = false;
     this.isAwaitingUnclick = false;
     this.isButtonHovered = false;
-    this.buttonColor = '#F44336';
-    this.buttonColorPressed = '#E53935';
-    this.buttonColorHover = '#D32F2F';
+    this.buttonColor = defaultButtonColors.base;
+    this.buttonColorPressed = defaultButtonColors.pressed;
+    this.buttonColorHover = defaultButtonColors.hover;
 
     // Event Handlers Init
     this.eventRefs = {
@@ -42,7 +48,7 @@ class MenuController {
       this.isButtonClicked = false;
     }
 
-    this.renderPlayButton();
+    this.render();
   }
 
   handleRelease(event) {
@@ -62,7 +68,7 @@ class MenuController {
 
       this.isButtonClicked = false;
     }
-    this.renderPlayButton();
+    this.render();
   }
 
   handleMove(event) {
@@ -75,11 +81,11 @@ class MenuController {
     if (x >= this.buttonLeft && x <= this.buttonLeft + this.buttonWidth &&
         y >= this.buttonTop && y <= this.buttonTop + this.buttonHeight) {
       this.isButtonHovered = true;
-      this.renderPlayButton();
+      this.render();
     } else if (this.isButtonHovered) {
       this.isButtonHovered = false;
       this.isButtonClicked = false;
-      this.renderPlayButton();
+      this.render();
     }
   }
 
@@ -96,18 +102,6 @@ class MenuController {
   }
 
   render() {
-    this.ctx.fillStyle = '#90CAF9';
-    this.ctx.fillRect(this.maxWidth * 0.2, this.maxHeight * 0.2, this.maxWidth * 0.6, this.maxHeight * 0.6);
-    this.ctx.strokeStyle = '#42A5F5';
-    this.ctx.strokeRect(this.maxWidth * 0.2, this.maxHeight * 0.2, this.maxWidth * 0.6, this.maxHeight * 0.6);
-    this.ctx.fillStyle = 'black';
-    this.ctx.font = '30px Arial';
-    this.ctx.fillText('Menu Text', this.maxWidth * 0.2 + 20, this.maxHeight * 0.2 + 40, this.maxWidth * 0.6);
-    this.renderPlayButton();
-  }
-
-
-  renderPlayButton() {
     if (this.isButtonClicked) {
       this.ctx.fillStyle = this.buttonColorPressed;
     } else if (this.isButtonHovered) {
@@ -122,4 +116,4 @@ class MenuController {
   }
 }
 
-export default MenuController;
+export default ButtonController;

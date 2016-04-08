@@ -1,5 +1,5 @@
 import InputController from './input-controller';
-import MenuController from './menu-controller';
+import MenuController from './menu/menu-controller';
 import SnakeController from './snake-controller';
 import { FoodFactory } from './food-controller';
 
