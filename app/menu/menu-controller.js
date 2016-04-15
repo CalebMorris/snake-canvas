@@ -26,7 +26,8 @@ class MenuController {
     this.ctx.fillStyle = 'black';
     this.ctx.font = '30px Arial';
     this.ctx.fillText(this.getMenuText(isGameOver), this.maxWidth * 0.2 + 20, this.maxHeight * 0.2 + 40, this.maxWidth * 0.6);
-    this.playButton.render(isGameOver);
+    this.playButton.setup(isGameOver);
+    this.playButton.render();
   }
 }
 

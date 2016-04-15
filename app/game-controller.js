@@ -79,7 +79,7 @@ class GameController {
 
     if (this.currentFood) {
       if (this.snakeController.doesCollideWith(this.currentFood.position)) {
-        console.log(`NomNom: ${[this.currentFood.position].map(v => `(${v.x},${v.y})`)}`);
+        // console.log(`NomNom: ${[this.currentFood.position].map(v => `(${v.x},${v.y})`)}`);
         // Nom-Nom
         this.currentFood = null;
         this.snakeController.increaseTail();
@@ -102,8 +102,10 @@ class GameController {
   }
 
   onGameStart() {
+    this.snakeController.reset();
     this.clearScreen();
     this.isGameRunning = true;
+    this.isGameOver = false;
     this.renderLoop();
     this.controllerLoop();
   }

@@ -47,9 +47,14 @@ canvas {
 	background-color: white;
 }
 
-.controls {
-	width: 120px;
+#controls {
+	min-width: 120px;
 	background-color: white;
+}
+
+#speed {
+	float:right;
+	margin-right:4px;
 }
 
 .stats {

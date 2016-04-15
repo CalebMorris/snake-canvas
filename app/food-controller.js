@@ -8,7 +8,7 @@ class Food {
     this.offsetX = offsetX;
     this.offsetY = offsetY;
     this.hasDrawn = false;
-    console.log('Food @', position);
+    // console.log('Food @', position);
   }
 
   render() {

@@ -1,4 +1,5 @@
 import GameController from './game-controller';
+import SettingsController from './menu/settings-controller';
 
 require('./Assets/style.scss');
 
@@ -11,6 +12,7 @@ require('./Assets/style.scss');
   const scoreLabel = document.getElementById('score');
 
   const gameController = new GameController(canvas, context, canvas.width, canvas.height, window.requestAnimationFrame);
+  const settingsController = new SettingsController(document, gameController);
 
   gameController.scoreUpdateHook = (score) => {
     scoreLabel.textContent = score;

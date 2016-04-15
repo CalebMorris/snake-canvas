@@ -15,7 +15,12 @@ class SnakeController {
     this.ctx = context;
     this.gameWidth = gameWidth;
     this.gameHeight = gameHeight;
+    this.size = segmentSize;
 
+    this.reset();
+  }
+
+  reset() {
     this.head = new Position(
       Math.floor(this.gameWidth / 2),
       Math.floor(this.gameHeight / 2)
@@ -23,7 +28,6 @@ class SnakeController {
     this.tailStack = [];
     this.direction = Direction.up;
     this.shouldRedraw = true;
-    this.size = segmentSize;
 
     this.removedPiece = null;
     this.canChangeDirection = true;
@@ -96,7 +100,7 @@ class SnakeController {
     }
     this.shouldRedraw = true;
     this.canChangeDirection = true;
-    console.log(`Head: ${this.head.toString()}, Tail: [${this.tailStack.map(v => v.toString())}]`);
+    // console.log(`Head: ${this.head.toString()}, Tail: [${this.tailStack.map(v => v.toString())}]`);
   }
 
   /**

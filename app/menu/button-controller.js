@@ -18,9 +18,6 @@ class ButtonController {
     this.buttonWidth = this.maxWidth * 0.6 - 40;
 
     this.buttonHeight = 80;
-    this.isButtonClicked = false;
-    this.isAwaitingUnclick = false;
-    this.isButtonHovered = false;
     this.buttonColor = defaultButtonColors.base;
     this.buttonColorPressed = defaultButtonColors.pressed;
     this.buttonColorHover = defaultButtonColors.hover;
@@ -31,6 +28,13 @@ class ButtonController {
       mouseup : this.handleRelease.bind(this),
       mousemove : this.handleMove.bind(this),
     };
+  }
+
+  setup(isGameOver) {
+    this.buttonText = isGameOver ? 'Play Again' : 'Play Game';
+    this.isButtonClicked = false;
+    this.isAwaitingUnclick = false;
+    this.isButtonHovered = false;
     this.attachListeners();
   }
 
@@ -115,7 +119,7 @@ class ButtonController {
     this.ctx.fillRect(this.buttonLeft, this.buttonTop, this.buttonWidth, this.buttonHeight);
     this.ctx.fillStyle = 'black';
     this.ctx.font = '30px Arial';
-    this.ctx.fillText('Play Game', this.maxWidth * 0.2 + 40, this.maxHeight * 0.6 + 30, this.maxWidth * 0.6);
+    this.ctx.fillText(this.buttonText, this.maxWidth * 0.2 + 40, this.maxHeight * 0.6 + 30, this.maxWidth * 0.6);
   }
 }
 
