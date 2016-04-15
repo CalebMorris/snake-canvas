@@ -1,9 +1,11 @@
-# Peer Review Online
+# Snake Canvas
 
-Online peer review website to improve open source and group code quality.
+Class snake game in HTML5 Canvas and JS
 
 # Running
 
-Running dev
+Running locally
 
-`nf run -e .env node index.js`
+1. `npm install`
+1. `npm run dev`
+1. Visit `localhost:8080`
