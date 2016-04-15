@@ -9,6 +9,7 @@ module.exports = {
   output : {
     path : './build',
     filename : 'bundle.[hash].js',
+    publicPath: "./",
   },
   devtool : 'source-map',
   devServer : {
