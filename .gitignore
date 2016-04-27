@@ -5,6 +5,7 @@ npm-debug.log
 .env
 
 # Base Node and IDE Files
+build/
 .DS_STORE
 node_modules
 *~
